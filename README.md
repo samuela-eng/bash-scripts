@@ -4,11 +4,17 @@
 
 # Bash files
 
+```
+git pull https://github.com/samuela-eng/bash-scripts.git <branch>
+```
+```
+git clone https://github.com/samuela-eng/bash-scripts.git 
+```
 
 # **.** [ Compress.sh ](compress.sh)
-```
-A script to automate compressing files to .gz .tar .tar.gz*
-```
+
+### *A script to automate compressing files to .gz .tar .tar.gz*
+
 # **.** [ Fileflt.sh ](fileflt.sh)
 ```
 A script to create regular and hidden file types , Bash files ,log files and configuration file types. .txt .env .log .cfg .sh*
