@@ -4,29 +4,59 @@
 #
 #
 set -e 
-read -p "Enter the file you want to compress" fl
+read -p "Enter the file you want to compress < example file.txt>" filename
 
-if [ -f $fl  ] || [ -d $fl ]; then
-	read -p "Enter the archive extension you prefer .gz .tar .tar.gz?" ex
+if [ -f $filename  ] || [ -d $filename ]; then
+	echo "File/Directory exists continuing"
 else
 	echo "THE FILE OR DIRECTORY DOES NOT EXIST!"
 fi
 
-case ${ex} in
-	.gz)
-		gzip $fl$ex
-		echo ".gz Archive file created successfully: "
+
+directory=$(pwd)
+read -p "Your current working directory is "$directory" do you wish to continue in this directory y/n ? : " check
+
+case $check in
+
+        "y")
+		echo ".......creating Archive in $directory "
 		;;
-	.tar)
-		read -p "Desired name for the backup archive: " b
-		tar -cvf $b$ex  $fl
-		echo ".tar Archive created sucessfully........"
-		;;
-	.tar.gz)
-		read -p "Desired name for the backup archive: " c
-		tar -czf $c$ex $fl
-		echo ".tar.gz Archive created sucessfully.........."
+
+	"n")
+		read -p "Specify path to directory <Note: Include forward slash at the end to indicate the directory> : " cst_directory
+		if [ -d $cst_directory ]; then
+			echo " Directory exists continuing"
+		else
+			echo " DIRECTORY DOES NOT EXIST SORRY "
+		fi
 		;;
 	*)
-		echo "Invalid compression type"
+		echo " Invalid input"
+		;;
 esac
+
+read -p "Specify new archive <name> Note: <Include dot extension to the new name <example newfile.gz/tar/.gz.tar> >: " archive_name
+compress=$(tar -caf "$cst_directory/$archive_name" $filename)
+$compress
+echo "Archive $archive_name has been created successfully, preview in the $cst_directory"
+
+#case $tar_c in
+
+	#".gz")
+	#	echo "...... Creating Archive..... "$filename$ext"" 
+	#	gzip "-9" -V "$filename$ext"
+              #	echo "$filename$ext created successfully"
+	#	;;
+#	"tar")
+#		read -p " Specify a  new archive <name> Note: <Include .tar  extension to the new name> : " tar_c
+#		tar -cf "$tar_c" "$filename"
+#		echo "..... Creating Archive..... "$filename$ext""
+#		tar -cf "$tar_c" "$filename$ext"
+				
+#		;;
+ #       *)
+
+#	        echo "Invalid compression type"
+#esac
+
+
